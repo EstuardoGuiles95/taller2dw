@@ -1,0 +1,359 @@
+------------Tabla Almacen----------
+Create procedure I_Almacen(@IdAlmacen int, @Nombre nchar(20),@Lote nchar(10),@FechaEntrada datetime,@FechaSalida datetime, @IdArticulo int)
+as
+Insert into Almacen(IdAlmacen,Nombre,Lote,FechaEntrada,FechaSalida,IdArticulo) Values (@IdAlmacen,@Nombre,@Lote,@FechaEntrada,@FechaSalida,@IdArticulo)
+go
+Create procedure A_Almacen(@IdAlmacen int, @Nombre nchar(20),@Lote nchar(10),@FechaEntrada datetime,@FechaSalida datetime, @IdArticulo int)
+as
+Update Almacen set Nombre=@Nombre,Lote=@Lote,FechaEntrada=@FechaEntrada,FechaSalida=@FechaSalida,IdArticulo=@IdArticulo where IdAlmacen=@IdAlmacen
+go
+Create procedure BAlmacen(@IdAlmacen int)
+as
+Select * from Almacen where IdAlmacen=@IdAlmacen
+go
+Create procedure B_Almacen(@IdAlmacen int)
+as
+Delete from Almacen where IdAlmacen=@IdAlmacen
+go
+
+----------Tabla Articulo------------
+Create procedure I_Articulo(@IdArticulo int,@IdCategoria int,@IdProveedor int,@Codigo nchar(10),@Nombre nchar(10),@PrecioVenta decimal,@Stock int,@Descripcion nchar(10), @Imagen nchar(10),@Estado bit)
+as
+Insert into Articulo(IdArticulo,IdCategoria,IdProveedor,Codigo,Nombre,PrecioVenta,Stock,Descripcion,Imagen,Estado) Values(@IdArticulo,@IdCategoria,@IdProveedor,@Codigo ,@Nombre,@PrecioVenta,@Stock,@Descripcion,@Imagen,@Estado)
+GO
+Create procedure BArticulo(@IdArticulo int)
+as
+Select * from Articulo where IdArticulo=@IdArticulo 
+go
+Create procedure AArticulo(@IdArticulo int,@IdCategoria int,@IdProveedor int,@Codigo nchar(10),@Nombre nchar(10),@PrecioVenta decimal,@Stock int,@Descripcion nchar(10), @Imagen nchar(10),@Estado bit)
+as
+Update Articulo set IdCategoria=@IdCategoria,IdProveedor=@IdProveedor,Codigo=@Codigo,Nombre=@Nombre,PrecioVenta=@PrecioVenta,Stock=@Stock,Descripcion=@Descripcion,Imagen=@Imagen,Estado=@Estado where IdArticulo=@IdArticulo
+go
+Create Procedure DArticulo (@IdArticulo int)
+As 
+Delete From Articulo where IdArticulo=@IdArticulo
+go
+
+-----------Tabla Categoria---------
+Create procedure ICategoria(@IdCategoria int, @Nombre nchar(10),@Descripcion nchar(10),@Estado bit)
+as
+insert into Categoría(IdCategoria,Nombre,Descripcion,Estado) values (@IdCategoria,@Nombre,@Descripcion,@Estado)
+go
+Create procedure BCategoria(@IdCategoria int)
+as
+Select * from Categoría where IdCategoria=@IdCategoria
+go
+Create procedure ACategoria(@IdCategoria int, @Nombre nchar(10),@Descripcion nchar(10),@Estado bit)
+as
+update Categoría set Nombre=@Nombre,Descripcion=@Descripcion,Estado=@Estado where IdCategoria=@IdCategoria
+go
+Create procedure DCategoria(@IdCategoria int)
+as
+Delete from Categoría where IdCategoria=@IdCategoria
+go
+
+----------Tabla Cliente-------------
+Create procedure ICLiente(@IdCliente int,@Nombre nchar(10),@Direccion nchar(10),@Nit nchar(10))
+As
+Insert into Cliente(IdCliente,Nombre,Direccion,Nit) values (@IdCliente,@Nombre,@Direccion,@Nit)
+go
+Create procedure BCategoria(@IdCategoria int)
+as
+Select * from Categoría where IdCategoria=@IdCategoria
+go
+Create procedure ACliente(@IdCliente int,@Nombre nchar(10),@Direccion nchar(10),@Nit nchar(10))
+As
+Update Cliente set Nombre=@Nombre,Direccion=@Direccion,Nit=@Nit where IdCliente=@IdCliente
+go
+Create Procedure DCLiente(@IdCliente int)
+as
+Delete from Cliente where IdCliente=@IdCliente
+go
+
+----------Tabla Compra-------------
+Create procedure ICompra(@IdCompra int, @Fecha datetime,@Cantidad int,@total decimal(18,0),@IdArticulo int,@IdPago int)
+as
+Insert into Compra(IdCompra, Fecha,Cantidad,total,IdArticulo,IdPago) Values(@IdCompra,@Fecha,@Cantidad,@total,@IdArticulo,@IdPago)
+Go
+Create procedure BCompra(@IdCompra int)
+as
+Select * from Compra where IdCompra=@IdCompra
+go
+Create procedure ACompra(@IdCompra int, @Fecha datetime,@Cantidad int,@total decimal(18,0),@IdArticulo int,@IdPago int)
+as
+Update Compra set Fecha=@Fecha,Cantidad=@Cantidad,total=@total,IdArticulo=@IdArticulo,IdPago=@IdPago where IdCompra=@IdCompra
+go
+Create procedure DCompra(@IdCompra int)
+as
+Delete from Compra where IdCompra=@IdCompra
+go
+
+--------Tabla CuentasPorCobrar-------------
+Create procedure ICPC(@IdCC int,@NombreCuenta nchar(10),@Activo nchar(10),@Estado int)
+as
+Insert into CuentasporCobrar(IdCuentaCobrar,NombreCuenta,Activo,Estado) values(@IdCC,@NombreCuenta,@Activo,@Estado)
+go
+Create procedure BCPC(@IdCC int)
+as
+Select * from CuentasporCobrar where IdCuentaCobrar=@IdCC
+go
+Create procedure ACPC(@IdCC int,@NombreCuenta nchar(10),@Activo nchar(10),@Estado int)
+as
+update CuentasporCobrar set NombreCuenta=@NombreCuenta,Activo=@Activo,Estado=@Estado where  IdCuentaCobrar=@IdCC
+go
+Create procedure DCPC(@IdCC int)
+as
+Delete from CuentasporCobrar where IdCuentaCobrar=@IdCC
+go
+
+--------Tabla DetalleIngreso--------------
+Create procedure IDeI(@IDI int,@IdIngreso int,@IdArticulo int,@Cantidad int,@Precio Decimal(18,0))
+as
+Insert into DetalleIngreso(IdDetalleIngreso,IdIngreso,IdArticulo,Cantidad,Precio) Values (@IDI,@IdIngreso,@IdArticulo,@Cantidad,@Precio)
+go
+Create procedure BDI(@IDI int)
+as
+Select * from DetalleIngreso where IdDetalleIngreso=@IDI
+go
+Create procedure ADI(@IDI int,@IdIngreso int,@IdArticulo int,@Cantidad int,@Precio Decimal(18,0))
+as
+Update DetalleIngreso set IdIngreso=@IdIngreso,IdArticulo=@IdArticulo,Cantidad=@Cantidad,Precio=@Precio where IdDetalleIngreso=@IDI
+go
+Create procedure DDI(@IDI int)
+as
+Delete from DetalleIngreso where IdDetalleIngreso=@IDI
+go
+
+-----------Tabla DetalleVenta----------
+Create procedure IDV(@IDV int,@IdVenta int,@IdArticulo int,@Cantidad int,@Precio decimal(18,0),@Descuento decimal(18,0))
+as
+Insert into DetalleVenta(IdDetalleVenta,IdVenta,IdArticulo,Cantidad,Precio,Descuento) values(@IDV,@IdVenta,@IdArticulo,@Cantidad,@Precio,@Descuento)
+go
+Create procedure BDV(@IDV int)
+as
+Select * from DetalleVenta where IdDetalleVenta=@IDV
+go
+Create procedure ADV(@IDV int,@IdVenta int,@IdArticulo int,@Cantidad int,@Precio decimal(18,0),@Descuento decimal(18,0))
+as
+Update DetalleVenta set IdVenta=@IdVenta,IdArticulo=@IdArticulo,Cantidad=@Cantidad,Precio=@Precio,Descuento=@Descuento where IdDetalleVenta=@IDV
+go
+Create procedure DDV(@IDV int)
+as
+Delete from DetalleVenta where IdDetalleVenta=@IDV
+go
+
+----------Tabla Facturacion--------
+Create procedure IFacturacion(@IdFactura int,@IdPedido int,@Estado Bit)
+as
+insert into Facturación(IdFactura,IdPedido,Estado) Values(@IdFactura,@IdPedido,@Estado)
+Go
+Create Procedure BFacturacion(@IdFactura int)
+as
+Select * from Facturación where IdFactura=@IdFactura
+go
+Create Procedure AFacturacion(@IdFactura int,@IdPedido int,@Estado Bit)
+as
+Update Facturación set IdPedido=@IdPedido,Estado=@Estado where IdFactura=@IdFactura
+go
+Create Procedure DFacturacion(@IdFactura int)
+as
+Delete from Facturación where IdFactura=@IdFactura
+go
+
+----------Tabla FormadePago----------
+Create procedure IFP(@IFP int,@NombrePago nchar(10),@IdVenta int)
+As
+Insert into FormadePago(IdFormaPago,NombrePago,IdVentas) values(@IFP,@NombrePago,@IdVenta)
+go
+Create procedure BFP(@IFP int)
+as
+Select * from FormadePago where IdFormaPago=@IFP
+go
+Create procedure AFP(@IFP int,@NombrePago nchar(10),@IdVenta int)
+As
+Update FormadePago set NombrePago=@NombrePago,IdVentas=@IdVenta where IdFormaPago=@IFP
+go
+Create procedure SFP(@IFP int)
+as
+Delete from FormadePago where IdFormaPago=@IFP
+go
+
+----------Tabla Ingreso----------
+Create procedure IIngreso(@IdIngreso int,@IdProveedor int,@IdUsuario int,@Fecha datetime, @Impuesto decimal (18,0),@Total decimal(18,0),@Estado bit)
+as
+Insert into Ingreso (IdIngreso,IdProveedor,IdUsuario,Fecha,Impuesto,Total,Estado) values (@IdIngreso,@IdProveedor,@IdUsuario,@Fecha,@Impuesto,@Total,@Estado)
+go
+Create procedure BIngreso(@IdIngreso int)
+As
+Select * from Ingreso where IdIngreso=@IdIngreso
+go
+Create procedure AIngreso(@IdIngreso int,@IdProveedor int,@IdUsuario int,@Fecha datetime, @Impuesto decimal (18,0),@Total decimal(18,0),@Estado bit)
+as
+Update Ingreso set IdProveedor=@IdProveedor, IdUsuario=@IdUsuario,Fecha=@Fecha,Impuesto=@Impuesto,Total=@Total,Estado=@Estado where IdIngreso=@IdIngreso
+go
+Create procedure DIngreso(@IdIngreso int)
+As
+Delete from Ingreso where IdIngreso=@IdIngreso
+go
+
+----------Tabla Inventario---------
+Create procedure IInventario(@IdInventario int,@IdAlmacen int)
+as
+insert into Inventario(IdInventario,IdAlmacen) values(@IdInventario,@IdAlmacen)
+go
+Create procedure BInventario(@IdInventario int)
+as
+Select * from Inventario where IdInventario=@IdInventario
+go
+Create procedure AInventario(@IdInventario int,@IdAlmacen int)
+as
+Update Inventario set IdAlmacen=@IdAlmacen where IdAlmacen=@IdAlmacen
+go
+Create procedure DInventario(@IdInventario int)
+as
+Delete from Inventario where IdInventario=@IdInventario
+go
+
+---------Tabla Menu------------
+Create procedure IMenu(@ICC int,@IRH int,@IDInventario int)
+as
+Insert into Menu(IdCuentasCobrar,IdRecursosH,IdInventario) values(@ICC,@IRH,@IDInventario)
+Go
+Create procedure BMenu(@ICC int)
+as
+Select * from Menu where IdCuentasCobrar=@ICC
+go
+Create procedure AMenu(@ICC int,@IRH int,@IDInventario int)
+as
+Update Menu set IdRecursosH=@IRH,IdInventario=@IDInventario where IdCuentasCobrar=@ICC
+go
+Create procedure Dmenu(@ICC int)
+as
+Delete from Menu where IdCuentasCobrar=@ICC
+go
+
+--------Tabla Pedido-------------
+Create procedure IPedido(@IdPedido int,@IdVenta int,@Fecha datetime)
+as
+Insert into Pedido(IdPedido,IdVenta,Fecha) values(@IdPedido,@IdVenta,@Fecha)
+go
+Create procedure BPedido(@IdPedido int)
+as
+Select * from Pedido where IdPedido=@IdPedido
+go
+Create procedure APedido(@IdPedido int,@IdVenta int,@Fecha datetime)
+as
+Update Pedido set IdVenta=@IdVenta,Fecha=@Fecha where IdPedido=@IdPedido
+go
+Create procedure DPedido(@IdPedido int)
+as
+Delete from Pedido where IdPedido=@IdPedido
+go
+
+-------Tabla Proveedor--------
+Create procedure IProveedor(@IdProveedor int, @NombreProveedor nchar(10),@Direccion nchar(10),@Telefono nchar(10))
+as
+Insert into Proveedor(IdProveedor,NombreProveedor,Direccion,Telefono) values(@IdProveedor,@NombreProveedor,@Direccion,@Telefono)
+Go
+Create procedure BProveedor(@IdProveedor int)
+as
+Select * from Proveedor where IdProveedor=@IdProveedor
+go
+Create procedure AProveedor(@IdProveedor int, @NombreProveedor nchar(10),@Direccion nchar(10),@Telefono nchar(10))
+as
+Update Proveedor set NombreProveedor=@NombreProveedor,Direccion=@Direccion,Telefono=@Telefono where IdProveedor=@IdProveedor
+go
+Create procedure DProveedor(@IdProveedor int)
+as
+Delete from Proveedor where IdProveedor=@IdProveedor
+go
+
+--------Tabla Recursos Humanos-------
+Create procedure IRH(@IDEmpleado int,@Nombre nchar(10),@Apellidos nchar(10),@Direccion nchar(10), @Telefono nchar(10),@DPI nchar(10),@TE nchar(10),@CE nchar(10))
+as
+Insert into RecursosHumanos(IdEmpleados,Nombre,Apellidos,Direccion,Telefono,DPI,TipoEmpleado,CargoEmpleado) values (@IDEmpleado ,@Nombre ,@Apellidos ,@Direccion , @Telefono ,@DPI ,@TE ,@CE)
+go
+Create procedure BRH(@IDEmpleado int)
+as
+Select * from RecursosHumanos where IdEmpleados=@IDEmpleado
+go
+Create procedure A2RH(@IDEmpleado int,@Nombre nchar(10),@Apellidos nchar(10),@Direccion nchar(10), @Telefono nchar(10),@DPI nchar(10),@TE nchar(10),@CE nchar(10))
+as
+Update RecursosHumanos set Nombre=@Nombre,Apellidos=@Apellidos,Direccion=@Direccion,Telefono=@Telefono,DPI=@DPI,TipoEmpleado=@TE,CargoEmpleado=@CE where IdEmpleados=@IDEmpleado
+go
+Create procedure DRH(@IDEmpleado int)
+as
+Delete from RecursosHumanos where IdEmpleados=@IDEmpleado
+go
+
+--------Tabla Rol---------
+Create procedure IROl(@IdRol int,@Nombre nchar(10),@Descripcion nchar(10),@Estado bit)
+as 
+Insert into Rol(IdRol,Nombre,Descripcion,Estado) values (@IdRol,@Nombre,@Descripcion,@Estado)
+go
+Create procedure BRol(@IdRol int)
+as
+Select * from Rol where IdRol=@IdRol
+go
+Create procedure ARol(@IdRol int,@Nombre nchar(10),@Descripcion nchar(10),@Estado bit)
+as 
+Update Rol set Nombre=@Nombre,Descripcion=@Descripcion,Estado=@Estado where IdRol=@IdRol
+Go
+Create procedure DRol(@IdRol int)
+as
+Delete from Rol where IdRol=@IdRol
+go
+
+---------Tabla TalonarioPago------
+Create procedure ITP(@IdPago int,@IdEmpleado int,@MesPago nchar(10),@TipoPago nchar(10))
+as
+Insert into TalonarioPagos(IdPago,IdEmpleado,MesPago,TipoPago) values(@IdPago,@IdEmpleado,@MesPago,@TipoPago)
+Go
+Create procedure BTP(@IdPago int)
+as
+Select * from TalonarioPagos where IdPago=@IdPago
+go
+Create procedure ATP(@IdPago int,@IdEmpleado int,@MesPago nchar(10),@TipoPago nchar(10))
+as
+Update TalonarioPagos set IdEmpleado=@IdEmpleado,MesPago=@MesPago,TipoPago=@TipoPago where  IdPago=@IdPago
+Go
+Create procedure DTP(@IdPago int)
+as
+Delete from TalonarioPagos where IdPago=@IdPago
+go
+
+--------Tabla Usuario-------
+Create procedure IUsuario(@IdUsuario int,@IdRol int,@Nombre nchar(10),@Direccion nchar(10),@Telefono nchar(10), @Email nchar(10),@Clave nchar(10),@Estado bit,@TD nchar(10),@numDOC nchar(10))
+as
+Insert into Usuario(IdUsuario,IdRol,Nombre,Direccion,Telefono,Email,Clave,Estado,TipoDocumento,NumDocumento) values(@IdUsuario,@IdRol,@Nombre,@Direccion,@Telefono, @Email,@Clave,@Estado,@TD,@numDOC)
+go
+Create procedure BUsuario(@IdUsuario int)
+as
+Select * from Usuario where IdUsuario=@IdUsuario
+go
+Create procedure AUsuario(@IdUsuario int,@IdRol int,@Nombre nchar(10),@Direccion nchar(10),@Telefono nchar(10), @Email nchar(10),@Clave nchar(10),@Estado bit,@TD nchar(10),@numDOC nchar(10))
+as
+Update Usuario set IdRol=@IdRol,Nombre=@Nombre,Direccion=@Direccion,Telefono=@Telefono,Email=@Email,Clave=@Clave,Estado=@Estado,TipoDocumento=@TD,NumDocumento=@numDOC where IdUsuario=@IdUsuario
+go
+Create procedure DUsuario(@IdUsuario int)
+as
+Delete from Usuario where IdUsuario=@IdUsuario
+go
+
+--------Tabla Venta--------
+Create procedure IVenta(@IdVenta int,@IdCliente int,@IdUsuario int,@Fecha datetime,@Impuesto decimal(18,0),@Total decimal(18,0),@Estado bit, @TC nchar(10),@SC nchar(10),@NumCom nchar(10))
+as
+Insert into Venta(IdVenta,IdCliente,IdUsuario,Fecha,Impuesto,Total,Estado,TipoComprobante,SerieComprobante,NumComprobante) values (@IdVenta,@IdCliente,@IdUsuario,@Fecha,@Impuesto,@Total,@Estado,@TC,@SC,@NumCom)
+go
+Create procedure BVenta(@IdVenta int)
+as
+Select * from Venta where IdVenta=@IdVenta
+Go
+Create procedure AVenta(@IdVenta int,@IdCliente int,@IdUsuario int,@Fecha datetime,@Impuesto decimal(18,0),@Total decimal(18,0),@Estado bit, @TC nchar(10),@SC nchar(10),@NumCom nchar(10))
+as
+Update Venta set IdCliente=@IdCliente,@IdUsuario=@IdUsuario,Fecha=@Fecha,Impuesto=@Impuesto,Total=@Total,Estado=@Estado,TipoComprobante=@TC,SerieComprobante=@SC,NumComprobante=@NumCom where IdVenta=@IdVenta
+go
+Create procedure DVenta(@IdVenta int)
+as
+Delete from Venta where IdVenta=@IdVenta
+Go
