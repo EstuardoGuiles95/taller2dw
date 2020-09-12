@@ -1,0 +1,102 @@
+TRIGGERS
+--------------------------------------
+------FACTURACIÓN--------
+CREATE TRIGGER TR_FACTURACION ON Facturacion
+FOR DELETE
+AS
+BEGIN TRY
+    INSERT INTO Facturacion_TR(
+        idFactura,
+        IdPedido,
+        Estado)
+    SELECT idFactura,
+        IdPedido,
+        Estado,
+        GETDATE(),
+        SUSER_SNAME()
+    FROM deleted;
+END TRY
+BEGIN CATCH
+    ROLLBACK TRANSACTION;
+
+    THROW;
+END CATCH;
+GO
+
+----------- INVENTARIO ------------
+CREATE TRIGGER TR_INVENTARIO ON INVENTARIO
+FOR DELETE
+AS
+BEGIN TRY
+    INSERT INTO INVENTARIO_TR(
+        idInventario,
+        IdAlmacen)
+    SELECT idInventario,
+        IdAlmacen,
+        GETDATE(),
+        SUSER_SNAME()
+    FROM deleted;
+END TRY
+BEGIN CATCH
+    ROLLBACK TRANSACTION;
+
+    THROW;
+END CATCH;
+GO
+
+-------------- INGRESO -----------
+CREATE TRIGGER TR_INGRESO ON INGRESO
+FOR DELETE
+AS
+BEGIN TRY
+    INSERT INTO INGRESO_TR(
+idIngreso,
+Idproveedor,
+IdUsuario,
+Fecha,
+Impuesto,
+Total,
+Estado)
+    SELECT idIngreso,
+Idproveedor,
+IdUsuario,
+Fecha,
+Impuesto,
+Total,
+Estado,
+        GETDATE(),
+        SUSER_SNAME()
+    FROM deleted;
+END TRY
+BEGIN CATCH
+    ROLLBACK TRANSACTION;
+
+    THROW;
+END CATCH;
+GO
+
+-----------CUENTAS POR COBRAR----------
+
+CREATE TRIGGER TR_cuentasporcobrar ON cuentasporcobrar
+FOR DELETE
+AS
+BEGIN TRY
+    INSERT INTO cuentascobrar_TR(
+idcuentaCobrar,
+NombreCuenta,
+Activo,
+Estado)
+    SELECT idcuentaCobrar,
+NombreCuenta,
+Activo,
+Estado,
+        GETDATE(),
+        SUSER_SNAME()
+    FROM deleted;
+END TRY
+BEGIN CATCH
+    ROLLBACK TRANSACTION;
+
+    THROW;
+END CATCH;
+GO
